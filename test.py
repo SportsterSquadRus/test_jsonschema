@@ -20,4 +20,4 @@ for schema in schemas_dir:
             except jsonschema.exceptions.ValidationError as ve:
                 with open('readme.md', 'a', encoding='utf8') as readme:
                     readme.write('File {} does not match the schema {}. Error: {}\n\n'.format(
-                        event, schemas_dir[0], str(ve)[:str(ve).find(':')]))
+                        event, schemas_dir, str(ve)[:str(ve).find(':')]))
