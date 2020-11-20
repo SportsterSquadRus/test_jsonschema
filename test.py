@@ -9,15 +9,12 @@ for schema in schemas_dir:
     with open('schema/{}'.format(schema)) as schema_file:
         current_schema = json.load(schema_file)
 
+    v = jsonschema.Draft3Validator(current_schema)
+
     for event in events_dir:
         with open('event/{}'.format(event)) as event_file:
             result = json.load(event_file)
-            try:
-                jsonschema.validate(result, current_schema)
-                with open('readme.md', 'a', encoding='utf8') as readme:
-                    readme.write(
-                        'File {} matches the schema {}\n\n'.format(event, schema))
-            except jsonschema.exceptions.ValidationError as ve:
-                with open('readme.md', 'a', encoding='utf8') as readme:
-                    readme.write('File {} does not match the schema {}. Error: {}\n\n'.format(
-                        event, schemas_dir, str(ve)[:str(ve).find(':')]))
+
+        for error in sorted(v.iter_errors(result), key=str):
+            with open('readme.md', 'a', encoding='utf8') as readme:
+                readme.write('{}\n\n'.format(error.message))
