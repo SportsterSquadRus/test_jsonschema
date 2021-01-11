@@ -1,5 +1,3 @@
-### Данный репозиторий является результатом решения тестового задания к собеседованию на должность django-backend разработчика
-
 test.py is the main script file. It will work fine after jsonschema module installation.
 
 Results:
